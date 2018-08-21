@@ -9,6 +9,8 @@ namespace BoomFactory.Model
     {
         Mutil = 1,
 
-        Single = 2
+        Single = 2,
+
+        SubType = 3
     }
 }

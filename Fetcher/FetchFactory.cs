@@ -12,6 +12,8 @@ namespace BoomFactory.Fetcher
                     return DefaultFetch.Instance;
                 case MetaMode.Single:
                     return CompentFetch.Instance;
+                case MetaMode.SubType:
+                    return SubFetch.Instance;
             }
 
             return null;

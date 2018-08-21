@@ -65,5 +65,35 @@ namespace BoomFactory.Fetcher
             
             return (TService)target;
         }
+
+
+        /// <summary>
+        /// 根据子类ConstructorAttribute的设置矫正构造函数的设置
+        /// </summary>
+        /// <param name="config">子类类型配置</param>
+        /// <param name="constructorArgs">构造函数参数</param>
+        /// <returns>矫正后的结果</returns>
+        protected object[] GetAjustConstructorArgs(ClassConfig config, object[] constructorArgs)
+        {
+            if (config.ConstructorArgsDefine == false)
+            {
+                return constructorArgs;
+            }
+
+            var argsIndex = config.ConstructorArgsIndex;
+            if (argsIndex == null || argsIndex.Length == 0)
+            {
+                return null;
+            }
+
+            var len = argsIndex.Length;
+            var cArgs = new object[len];
+            for (var i = 0; i < len; i++)
+            {
+                cArgs[i] = constructorArgs[i];
+            }
+
+            return cArgs;
+        }
     }
 }

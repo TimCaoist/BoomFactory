@@ -59,6 +59,14 @@ namespace BoomFactory
             return fetch.Resolve<TService>(metaData, filter, constructorArgs, factoryConfig);
         }
 
+        public TSubType ResolveBySubType<TService, TSubType>(object[] constructorArgs)
+        {
+            var type = typeof(TService);
+            var metaData = GetMetaData(type);
+            var fetch = FetchFactory.Create(metaData);
+            return fetch.Resolve<TSubType>(metaData, null, constructorArgs, factoryConfig);
+        }
+
         protected abstract MetaData GetMetaData(Type type);
     }
 }
