@@ -4,9 +4,9 @@ namespace BoomFactory.Fetcher
 {
     public class FetchFactory
     {
-        public static BaseFetch Create(MetaData metaData)
+        public static BaseFetch Create(MetaMode metaMode)
         {
-            switch (metaData.MetaMode)
+            switch (metaMode)
             {
                 case MetaMode.Mutil:
                     return DefaultFetch.Instance;

@@ -46,6 +46,7 @@
     <Compile Include="Fetcher\CompentFetch.cs" />
     <Compile Include="Fetcher\DefaultFetch.cs" />
     <Compile Include="Fetcher\FetchFactory.cs" />
+    <Compile Include="Fetcher\SubFetch.cs" />
     <Compile Include="FilterCompare\DictCompare.cs" />
     <Compile Include="FilterCompare\ValueCompare.cs" />
     <Compile Include="Loader\AttributeLoader.cs" />

@@ -55,7 +55,7 @@ namespace BoomFactory
         {
             var type = typeof(TService);
             var metaData = GetMetaData(type);
-            var fetch = FetchFactory.Create(metaData);
+            var fetch = FetchFactory.Create(metaData.MetaMode);
             return fetch.Resolve<TService>(metaData, filter, constructorArgs, factoryConfig);
         }
 
@@ -63,8 +63,49 @@ namespace BoomFactory
         {
             var type = typeof(TService);
             var metaData = GetMetaData(type);
-            var fetch = FetchFactory.Create(metaData);
+            var fetch = FetchFactory.Create(MetaMode.SubType);
             return fetch.Resolve<TSubType>(metaData, null, constructorArgs, factoryConfig);
+        }
+
+        public TSubType ResolveBySubType<TService, TSubType>()
+        {
+            return ResolveBySubType<TService, TSubType>(null);
+        }
+
+        public TSubType ResolveBySubType<TSubType>()
+        {
+            return ResolveBySubType<TSubType>(null);
+        }
+
+        public TSubType ResolveBySubType<TSubType>(object[] constructorArgs)
+        {
+            var subType = typeof(TSubType);
+            var baseType = subType.BaseType;
+            var objectType = typeof(object);
+            while (baseType != objectType)
+            {
+                var metaData = GetMetaData(baseType);
+                if (metaData != null)
+                {
+                    var fetch = FetchFactory.Create(MetaMode.SubType);
+                    return fetch.Resolve<TSubType>(metaData, null, constructorArgs, factoryConfig);
+                }
+
+                baseType = baseType.BaseType;
+            }
+
+            var interfaces = subType.GetInterfaces();
+            foreach(var it in interfaces)
+            {
+                var metaData = GetMetaData(baseType);
+                if (metaData != null)
+                {
+                    var fetch = FetchFactory.Create(MetaMode.SubType);
+                    return fetch.Resolve<TSubType>(metaData, null, constructorArgs, factoryConfig);
+                }
+            }
+
+            return default(TSubType);
         }
 
         protected abstract MetaData GetMetaData(Type type);
